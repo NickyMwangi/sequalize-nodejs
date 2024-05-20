@@ -1,0 +1,19 @@
+{
+  "name": "intro-nodejs",
+  "version": "1.0.0",
+  "description": "NodeJs Rest API introduction",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Nickson Mwangi",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  }
+}
