@@ -1,4 +1,4 @@
-import { sequalize } from "../../config/pg-connect.js"
+import { sequalize } from "../../config/database.js"
 import { getAllProductsQuery, getProductsByIdQuery, getProductsByNameQuery, addProductQuery, deleteProductQuery, updateProductQuery } from "../dbQueries/index.js"
 
 export const getAllProducts = (req, res, next) => {

@@ -1,19 +1,23 @@
 'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
+import { Sequelize } from 'sequelize';
+import path from 'path'
+import fs from 'fs'
+import process from 'process'
+import { config } from '../../config/config.js'
+// const fs = require('fs');
+// const path = require('path');
+// const Sequelize = require('sequelize');
+// const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../../config/config.js')[env];
-const db = {};
+// const config = require(__dirname + '/../../config/config.js')[env];
+export const db = {};
 
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+if (config[env].use_env_variable) {
+  sequelize = new Sequelize(process.env[config[env].use_env_variable], config[env]);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config[env].database, config[env].username, config[env].password, config[env]);
 }
 
 fs
@@ -40,4 +44,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+

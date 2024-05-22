@@ -1,8 +1,8 @@
 import dotenv from 'dotenv'
 dotenv.config({ path: `${process.cwd()}/.env` })
 
-export const config = {
-  "development": {
+export default {
+  development: {
     "username": process.env.DB_USERNAME,
     "password": process.env.DB_PASSWORD,
     "database": process.env.DB_NAME,
@@ -10,7 +10,7 @@ export const config = {
     "port": process.env.DB_PORT,
     "dialect": "postgres"
   },
-  "test": {
+  test: {
     "username": process.env.DB_USERNAME,
     "password": process.env.DB_PASSWORD,
     "database": process.env.DB_NAME,
@@ -18,7 +18,7 @@ export const config = {
     "port": process.env.DB_PORT,
     "dialect": "postgres"
   },
-  "production": {
+  production: {
     "username": process.env.DB_USERNAME,
     "password": process.env.DB_PASSWORD,
     "database": process.env.DB_NAME,

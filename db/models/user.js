@@ -1,31 +1,42 @@
+'use strict';
 import { Sequelize } from 'sequelize';
 import { sequalize } from "../../config/database.js";
 
-export default sequalize.define('products', {
+
+export default sequalize.define('users', {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  name: {
-    allowNull: yes,
+  userType: {
+    type: Sequelize.ENUM
+  },
+  firstName: {
     type: Sequelize.STRING
   },
-  description: {
-    allowNull: yes,
-    type: Sequelize.TEXT
+  lastName: {
+    type: Sequelize.STRING
   },
-  price: {
-    allowNull: yes,
-    type: Sequelize.NUMBER
+  email: {
+    type: Sequelize.STRING
   },
-  updatedAt: {
-    allowNull: true,
-    type: Sequelize.DATE
+  age: {
+    type: Sequelize.BIGINT
+  },
+  phoneNumber: {
+    type: Sequelize.STRING
+  },
+  password: {
+    type: Sequelize.STRING
   },
   createdAt: {
-    allowNull: true,
+    allowNull: false,
+    type: Sequelize.DATE
+  },
+  updatedAt: {
+    allowNull: false,
     type: Sequelize.DATE
   },
   deletedAt: {
@@ -35,5 +46,5 @@ export default sequalize.define('products', {
 }, {
   paranoid: true, // allows soft delete. Ensure you have deletedAt
   freezeTableName: true,
-  modelName: 'products'
+  modelName: 'users'
 })
