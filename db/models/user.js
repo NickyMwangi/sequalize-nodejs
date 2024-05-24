@@ -1,6 +1,7 @@
 'use strict';
-import { Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 import { sequalize } from "../../config/database.js";
+import bcrypt from 'bcrypt'
 
 
 export default sequalize.define('users', {
@@ -8,40 +9,53 @@ export default sequalize.define('users', {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: DataTypes.INTEGER
   },
   userType: {
-    type: Sequelize.ENUM
+    type: DataTypes.ENUM('0', '1', '2')
   },
   firstName: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   lastName: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   email: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   age: {
-    type: Sequelize.BIGINT
+    type: DataTypes.BIGINT
   },
   phoneNumber: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   password: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
+  },
+  confirmPassword: {
+    type: DataTypes.VIRTUAL,
+    set(value) {
+      if (value === this.password) {
+        const hashedPwd = bcrypt.hashSync(value, 10);
+        console.log(hashedPwd)
+        this.setDataValue('password', hashedPwd);
+      }
+      else {
+        throw new Error('Password and confirm password MUST be the same')
+      }
+    }
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
   updatedAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
   deletedAt: {
     allowNull: true,
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   }
 }, {
   paranoid: true, // allows soft delete. Ensure you have deletedAt

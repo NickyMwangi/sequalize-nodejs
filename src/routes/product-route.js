@@ -1,14 +1,16 @@
 import express from 'express'
 import { addProduct, getAllProducts, getProductByID, deleteProduct, updateProduct } from '../controllers/index.js';
+import { jwtTokenVerification } from '../middlewares/authMiddleware.js';
 export const ProductRouter = express.Router();
 
 
-ProductRouter.get('/', getAllProducts)
 
-ProductRouter.get('/:id', getProductByID)
+ProductRouter.get('/', jwtTokenVerification, getAllProducts)
 
-ProductRouter.delete('/:id', deleteProduct)
+ProductRouter.get('/:id', jwtTokenVerification, getProductByID)
 
-ProductRouter.post('/', addProduct)
+ProductRouter.delete('/:id', jwtTokenVerification, deleteProduct)
 
-ProductRouter.put('/:id', updateProduct)
+ProductRouter.post('/', jwtTokenVerification, addProduct)
+
+ProductRouter.put('/:id', jwtTokenVerification, updateProduct)

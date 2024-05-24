@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userType: {
-        type: Sequelize.ENUM('0', '1', '3')
+        type: Sequelize.ENUM('0', '1', '2')
       },
       firstName: {
         type: Sequelize.STRING
