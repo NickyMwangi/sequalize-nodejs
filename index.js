@@ -1,6 +1,8 @@
 import express from 'express'
 import { AuthRoutes, ProductRouter } from './src/routes/index.js';
 import dotenv from 'dotenv'
+import { catchErrorAsync } from './src/utils/catchErrorAsync.js';
+import { AppError } from './src/utils/appError.js';
 dotenv.config({ path: `${process.cwd()}/.env` })
 
 
@@ -15,21 +17,18 @@ app.use('/api/v1/product', ProductRouter)
 app.use('/api/v1/auth', AuthRoutes)
 
 //Call NEXT to passs the error.
-app.use('*', (req, res, next) => {
-  const err = new Error('Endpoint not found');
-  err.status = '404'
-  next(err)
-})
+app.use('*', catchErrorAsync(async (req, res, next) => {
+  throw new AppError('Invalid endPoint', '404');
+}))
 
-//global error handler
+//global error handler. Middleware to catch the error.
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      status: err.status || 500,
-      message: err.message || err || 'Error occurred while trying to react the endpoint'
-    }
-  })
+  res.status(err.statusCode || 500).json({
+    status: err.status,
+    message: err.message,
+    stack: err.stack
+  });
+
 })
 
 
