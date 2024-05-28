@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt'
 
 export const Login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(password)
   if (email && password) {
     const result = await user.findOne({ where: { email } })
     if (result && await bcrypt.compare(password, result.password)) {

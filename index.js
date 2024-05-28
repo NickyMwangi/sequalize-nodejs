@@ -3,6 +3,7 @@ import { AuthRoutes, ProductRouter } from './src/routes/index.js';
 import dotenv from 'dotenv'
 import { catchErrorAsync } from './src/utils/catchErrorAsync.js';
 import { AppError } from './src/utils/appError.js';
+import { globalErrorHandler } from './src/controllers/errorHandlerController.js';
 dotenv.config({ path: `${process.cwd()}/.env` })
 
 
@@ -18,18 +19,11 @@ app.use('/api/v1/auth', AuthRoutes)
 
 //Call NEXT to passs the error.
 app.use('*', catchErrorAsync(async (req, res, next) => {
-  throw new AppError('Invalid endPoint', '404');
+  throw new AppError(`Cannot find ${req.originalUrl} on this server`, '404');
 }))
 
 //global error handler. Middleware to catch the error.
-app.use((err, req, res, next) => {
-  res.status(err.statusCode || 500).json({
-    status: err.status,
-    message: err.message,
-    stack: err.stack
-  });
-
-})
+app.use(globalErrorHandler)
 
 
 
